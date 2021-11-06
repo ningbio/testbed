@@ -1,0 +1,100 @@
+{
+    "lineSpacing": "normal",
+    "alignment": "left",
+    "lines": [
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 80,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        1
+                    ]
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        2,
+                        3
+                    ]
+                }
+            ],
+            "text": "abcd"
+        },
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 80,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        1
+                    ]
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        2,
+                        3
+                    ]
+                }
+            ],
+            "text": "1234"
+        },
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 80,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        3
+                    ]
+                }
+            ],
+            "text": "xyz!"
+        }
+    ]
+}

@@ -1,0 +1,76 @@
+{
+    "lineSpacing": "normal",
+    "alignment": "left",
+    "lines": [
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 80,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "text": "a"
+        },
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        3
+                    ]
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 80,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        4,
+                        6
+                    ]
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        7,
+                        10
+                    ]
+                }
+            ],
+            "text": "abc TEXt de"
+        }
+    ]
+}

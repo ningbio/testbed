@@ -1,0 +1,303 @@
+{
+    "lineSpacing": "normal",
+    "alignment": "left",
+    "lines": [
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        2
+                    ],
+                    "text": "The"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "green",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        3,
+                        10
+                    ],
+                    "text": "re can b"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        11,
+                        21
+                    ],
+                    "text": "e only one!"
+                }
+            ],
+            "text": "There can be only one!"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        2
+                    ],
+                    "text": "The"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        3,
+                        10
+                    ],
+                    "text": "re can b"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        11,
+                        21
+                    ],
+                    "text": "e only one!"
+                }
+            ],
+            "text": "There can be only one!"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        1
+                    ],
+                    "text": "i "
+                },
+                {
+                    "style": {
+                        "font": "cursive",
+                        "fontSize": 80,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        2,
+                        4
+                    ],
+                    "text": "TEX"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        5,
+                        8
+                    ],
+                    "text": "t e!"
+                }
+            ],
+            "text": "i TEXt e!"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        10
+                    ],
+                    "text": "This is a "
+                },
+                {
+                    "style": {
+                        "font": "cursive",
+                        "fontSize": 80,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        11,
+                        13
+                    ],
+                    "text": "TEX"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        14,
+                        23
+                    ],
+                    "text": "t example!"
+                }
+            ],
+            "text": "This is a TEXt example!"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "black",
+                        "fontVariation": "italic",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        9
+                    ],
+                    "text": "This is a "
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "strike",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        10,
+                        12
+                    ],
+                    "text": "TEX"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "underline",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        13,
+                        21
+                    ],
+                    "text": "t example"
+                },
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "black",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": "sub"
+                    },
+                    "range": [
+                        22,
+                        24
+                    ],
+                    "text": "234"
+                }
+            ],
+            "text": "This is a TEXt example234"
+        }
+    ]
+}

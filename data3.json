@@ -1,0 +1,114 @@
+{
+    "lineSpacing": "double",
+    "alignment": "left",
+    "lines": [
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        40
+                    ]
+                }
+            ],
+            "text": "I love to use BioRender because it rocks!"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "green",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        19
+                    ]
+                }
+            ],
+            "text": "我喜欢使用BioRender因为它很酷！"
+        },
+        {
+            "textIndent": {
+                "indent": 40,
+                "symbol": "\u2022"
+            },
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "blue",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        21
+                    ]
+                }
+            ],
+            "text": "私はBioRenderを使うのが大好きです。"
+        },
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        62
+                    ]
+                }
+            ],
+            "text": "Мне нравится использовать BioRender, потому что он потрясающий!"
+        },
+        {
+            "runs": [
+                {
+                    "style": {
+                        "font": "serif",
+                        "fontSize": 50,
+                        "color": "red",
+                        "fontVariation": "normal",
+                        "decoration": "none",
+                        "letterSpacing": 0,
+                        "script": ""
+                    },
+                    "range": [
+                        0,
+                        62
+                    ]
+                }
+            ],
+            "text": "A-b-c-d-g-g-h-j-k-k-lA-b-c-d-g-g-h-j-k-k-lA-b-c-d-g-g-h-j-k-k-l"
+        }
+    ]
+}

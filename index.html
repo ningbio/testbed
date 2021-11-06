@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script src="bundle.js" type="module" async defer></script>
+    <style>
+        #exampleToolbar {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            right: 10px;
+            height: 27px;
+            overflow: hidden;
+        }
+
+        #exampleToolbar label {
+            border: 1px solid silver;
+            padding: 1px 2px 0 1px;
+        }
+
+        #canvasEditor {
+            border: 1px solid silver;
+            background-color: rgb(233, 233, 233);
+            position: absolute;
+            left: 10px;
+            top: 40px;
+            width: 90%;
+            height: 90%;
+        }
+
+        #cursor {
+            background-color: black;
+            width: 2px;
+            border: none;
+            color: transparent;
+            overflow: hidden;
+            outline: none;
+        }
+
+        #textarea {
+            background-color: black;
+            border: none;
+            overflow: hidden;
+            outline: none;
+            resize: none;
+        }
+
+        .unselectable {
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="exampleToolbar">
+        <select id="font">
+            <option value="serif">Times</option>
+            <option value="sans-serif">Helvetica</option>
+            <option value="monospace">Courier</option>
+            <option value="cursive">Cursive</option>
+            <option value="fantasy">Fantasy</option>
+        </select>
+        <select id="size">
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>14</option>
+            <option>16</option>
+            <option>18</option>
+            <option>20</option>
+            <option>24</option>
+            <option>30</option>
+            <option>36</option>
+            <option>48</option>
+            <option>64</option>
+            <option>72</option>
+            <option>96</option>
+        </select>
+        <label><input type="checkbox" id="bold"><strong>B</strong></label>
+        <label><input type="checkbox" id="italic"><em>i</em></label>
+        <label><input type="checkbox" id="underline"><u>u</u></label>
+        <label><input type="checkbox" id="strikeout"><strike>s</strike></label>
+        <select id="align">
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+            <option value="justify">Justify</option>
+        </select>
+        <select id="script">
+            <option value="normal">Normal</option>
+            <option value="super">Superscript</option>
+            <option value="sub">Subscript</option>
+        </select>
+        <select id="color">
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+        </select>
+        <select id="bullet">
+            <option value="none">none</option>
+            <option value="dot">&#8226</option>
+            <option value="line">&#8259</option>
+            <option value="number">1.</option>
+        </select>
+
+    </div>
+
+    <canvas id="canvasEditor"></canvas>
+    <div id="cursor" unselectable="on" class="unselectable">
+        <textarea id="textarea"></textarea>
+    </div>
+
+    <script>
+
+        let btex;
+        let layout;
+
+        window.onload = function () {
+            if (window.btex) {
+                btex = window.btex;
+            }
+            // test canvas draw
+            const canvas = document.getElementById('canvasEditor');
+            const ctx = canvas.getContext('2d');
+
+            // config canvas
+            var dpr = Math.max(1, window.devicePixelRatio || 1);
+            canvas.width = dpr * canvas.clientWidth;
+            canvas.height = dpr * canvas.clientHeight;
+            var canvasRect = canvas.getBoundingClientRect();
+            console.log(`canvas size:${canvas.width} ${canvas.height} canvasRect (left,top): ${canvasRect.left} ${canvasRect.top}`);
+
+            // begin cursor blinking
+            const cursor = document.getElementById('cursor');
+            const hiddenTextArea = document.getElementById('textarea');
+
+            hiddenTextArea.addEventListener('input', (e) => {
+                console.log(`hiddenTextArea = ${hiddenTextArea.value}`);
+                if (hiddenTextArea.value === '\n') {
+                    console.log(`Return Pressed in hidden TextArea`);
+                    if (btex.selectionIsEmpty(layout.selection)) {
+                        layout.newlineAtCaret();
+                    } else {
+                        // delete the content, then insert return 
+                        layout.deleteSelected();
+                        layout.newlineAtCaret();
+                        layout.render();
+                    }
+                    updateCursor();
+                } else if (layout && !e.isComposing) {
+                    const content = hiddenTextArea.value;
+                    console.log(`inserting content: ${content}`)
+
+                    if (!btex.selectionIsEmpty(layout.selection)) {
+                        layout.deleteSelected();
+                    }
+
+                    layout.insertTextAtCaret(content);
+                    updateCursor();
+                }
+
+                hiddenTextArea.select();
+            });
+
+            // when composing with IME, it doesn't fire input event after composing is done, so we need to handle one extra insertion
+            hiddenTextArea.addEventListener('compositionend', (e) => {
+                IME_Active = false;
+                const content = e.target.value;
+                console.log(`inserting content: ${content}`)
+                layout.insertTextAtCaret(content);
+                updateCursor();
+
+                hiddenTextArea.select();
+            });
+
+            // somehow input event cannot handle backspace
+            hiddenTextArea.onkeydown = function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key === 8 || key === 46) {
+                    // backspace is pressed
+                    console.log('Backspace deleting Pressed in hidden TextArea');
+                    if (btex.selectionIsEmpty(layout.selection)) {
+                        layout.backspaceAtCaret();
+                    } else {
+                        layout.deleteSelected();
+                        layout.render();
+                    }
+                    updateCursor();
+                }
+            };
+
+            cursor.style = 'position:absolute';
+            var cursorVisible = true;
+            const alternateVisibility = () => {
+                if (cursorVisible) {
+                    cursor.style.opacity = 0;
+                    cursorVisible = false;
+                } else {
+                    cursor.style.opacity = 1;
+                    cursorVisible = true;
+                }
+            };
+            var cursorTimer = setInterval(alternateVisibility, 500);
+
+            const updateCursor = (visible = true) => {
+                if (layout && layout.caret) {
+                    const { left, top, height } = layout.getCursorInfo();
+                    const docX = canvasRect.left + Math.ceil(left / dpr);
+                    const docY = canvasRect.top + Math.ceil(top / dpr);
+                    cursor.style.left = docX + 'px';
+                    const delta = 0.2;
+                    cursor.style.top = (docY + delta * height / dpr) + 'px';
+                    cursor.style.height = Math.ceil((1.0 - delta) * height / dpr) + 'px';
+                    const color = layout.getCaretColor();;
+                    cursor.style.color = color;
+                    cursor.style.backgroundColor = color;
+                    hiddenTextArea.style.backgroundColor = color;
+                    hiddenTextArea.style.color = color;
+
+                    // hiddenTextArea.style.transform = 'rotate(45deg)';
+                    // cursor.style.transform = 'rotate(45deg)';
+
+                    // console.log(`${docX} ${docY} ${cursor.style.height}`);
+                    if (visible) {
+                        hiddenTextArea.focus(); // to receive input event
+                        hiddenTextArea.select();// to overwrite existing content
+                    }
+                }
+            };
+
+            // fill default json data into data and selection
+            fetch("data4.json")
+                .then(response => response.json())
+                .then(json => {
+                    console.log('load data model:');
+                    console.log(json);
+                    layout = new btex.Layout(ctx, json);
+
+                    // test editing ---------------------------------------------------------------------------
+                    layout.selection = {
+                        start: { lineIndex: 0, runIndex: 1, charIndex: 2, endOfLine: false },
+                        end: { lineIndex: 2, runIndex: 0, charIndex: 1, endOfLine: false },
+                    }
+                    // layout.caret = layout.deleteSelected();
+                    // layout.render();
+                    // layout.insertTextAtCaret('12\n34');
+                    layout.styleSelected({ color: 'red' });
+
+                    // still need to calc layout
+                    layout.calcLayout();
+                    layout.render();
+
+
+
+                    updateCursor();
+                });
+
+            let isMouseDown = false;
+            let isDragging = false;
+            let startTextPos = undefined;
+            canvas.addEventListener('mousedown', (e) => {
+                const x = (e.clientX - canvasRect.left);
+                const y = (e.clientY - canvasRect.top);
+                if (x < 0 || y < 0 || x > canvasRect.width - 1 || y > canvasRect.height - 1) return;
+
+                // clear selection
+                layout.clearSelection();
+
+                startTextPos = layout.getTextPosition(x * dpr, y * dpr);
+                layout.caret = startTextPos;
+
+                updateCursor();
+                isMouseDown = true;
+                // isDragging = true;
+            });
+
+            // to avoid mouseup in another element, let window respond it
+            window.addEventListener('mouseup', (e) => {
+                if (isMouseDown === true) {
+                    if (btex.selectionIsEmpty(layout.selection)) {
+                        layout.clearSelection();
+                        layout.render();
+                    }
+                    isDragging = false;
+                    isMouseDown = false;
+
+                    // focus back to hiddenArea
+                    hiddenTextArea.focus();
+                }
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (isMouseDown === true) {
+                    isDragging = true;
+
+                    const x = (e.clientX - canvasRect.left);
+                    const y = (e.clientY - canvasRect.top);
+                    if (x < 0 || y < 0 || x > canvasRect.width - 1 || y > canvasRect.height - 1) return;
+
+                    const endTextPos = layout.getTextPosition(x * dpr, y * dpr);
+
+                    if (JSON.stringify(endTextPos) !== JSON.stringify(startTextPos)) {
+                        if (btex.positionLessOrEqual(startTextPos, endTextPos)) {
+                            layout.selection = { start: startTextPos, end: endTextPos };
+                        } else {
+                            layout.selection = { start: endTextPos, end: startTextPos };
+                        }
+                    }
+                    layout.caret = endTextPos;
+                    updateCursor(false);
+                    layout.render();
+                }
+            });
+
+            canvas.addEventListener('dblclick', function (e) {
+                const x = (e.clientX - canvasRect.left);
+                const y = (e.clientY - canvasRect.top);
+                if (x < 0 || y < 0 || x > canvasRect.width - 1 || y > canvasRect.height - 1) return;
+
+                const textPos = layout.getTextPosition(x * dpr, y * dpr);
+                layout.selection = layout.getWordSelection(textPos);
+                layout.render();
+            }, false);
+
+            window.addEventListener('resize', () => {
+                canvas.width = dpr * canvas.clientWidth;
+                canvas.height = dpr * canvas.clientHeight;
+                canvasRect = canvas.getBoundingClientRect();
+                layout.calcLayout();
+                layout.render();
+            });
+
+            document.addEventListener('keydown', check, false);
+            function check(e) {
+                var code = e.keyCode;
+                var key = e.key;
+                console.log(`e.target: ${e.target}`);
+                if (e.target == canvas) {
+                    console.log(`keydown ${code}`);
+                }
+                switch (key) {
+                    case 'd':
+                        layout.showDebugRendering = !layout.showDebugRendering;
+                        layout.render();
+                        console.log(`layout.showDebugRendering:${layout.showDebugRendering};`)
+                        break;
+
+                    case '-':
+                        // left arrow
+                        if (layout) {
+                            layout.decreaseLineBreakWidth();
+                            layout.calcLayout();
+                            updateCursor();
+                        }
+                        break;
+                    case '=': // right arrow
+                        if (layout) {
+                            layout.increaseLineBreakWidth();
+                            layout.calcLayout();
+                            updateCursor();
+                        }
+                        break;
+                    case 'ArrowUp': // up - find character above
+                        layout.moveCaretUp();
+                        break;
+                    case 'ArrowLeft':
+                        if (e.metaKey)
+                            layout.moveCaretToHead();
+                        else
+                            layout.moveCaretLeft();
+                        break;
+                    case 'ArrowRight':
+                        if (e.metaKey)
+                            layout.moveCaretToTail();
+                        else
+                            layout.moveCaretRight();
+                        break;
+                    case 'ArrowDown': // down arrow - find character below
+                        layout.moveCaretDown();
+                        break;
+                    case 'Tab':
+                        // insert 4 spaces or change indentation
+                        console.log(`insert 4 spaces or change indentation`);
+                        break;
+                }
+
+                // force cursor to show                
+                updateCursor();
+                clearInterval(cursorTimer);
+                cursorVisible = true;
+                cursor.style.opacity = 1;
+                cursorTimer = setInterval(alternateVisibility, 500);
+            }
+
+            var elem = document.querySelector('#exampleEditor');
+            // Wire up the toolbar controls
+            ['font', 'size', 'bold', 'italic', 'underline',
+                'strikeout', 'align', 'script', 'color'].forEach(function (id) {
+                    var elem = document.querySelector('#' + id);
+
+                });
+            var valign = document.querySelector('#valign')
+        };
+    </script>
+</body>
+
+</html>
